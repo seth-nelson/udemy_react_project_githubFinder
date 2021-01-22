@@ -1,24 +1,23 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-export class Navbar extends Component {
-    // Defaults to this if no props are passed in
-    static defaultProps = {
-        title: 'Github Finder'
-    };
+// Can also be formatted with passing props like this: const Navbar = (props) => {
+const Navbar = ({ title }) => {
+    return (
+        <nav className='navbar bg-primary'>
+            <h1>{title}</h1>
+            {/* // this can also be written as <h1>{props.title}</h1> if you choose to pass props not destructured */}
+        </nav>
+    )
+}
 
-    // Checks the type of your prop to ensure proper mounting
-    static propTypes = {
-        title: PropTypes.string.isRequired
-    }
+Navbar.defaultProps = {
+    title: 'Github Finder'
+};
 
-    render() {
-        return (
-            <nav className='navbar bg-primary'>
-                <h1>{this.props.title}</h1>
-            </nav>
-        )
-    }
+
+Navbar.propTypes = {
+    title: PropTypes.string.isRequired
 }
 
 export default Navbar

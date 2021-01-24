@@ -11,14 +11,24 @@ class App extends Component {
     isLoading: false
   }
 
-  async componentDidMount() {
-    this.setState({isLoading: true});
+  // --- TEST USERS ---
 
-    const res = await axios.get(`https://api.github.com/users?client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+  // async componentDidMount() {
+  //   this.setState({isLoading: true});
 
-    this.setState({ users: res.data, isLoading: false})
+  //   const res = await axios.get(`https://api.github.com/users?client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
 
-    console.log(res.data);
+  //   this.setState({ users: res.data, isLoading: false});
+
+  //   console.log(res.data);
+  // }
+
+  searchUsers = async text => {
+    this.setState({ isLoading: true });
+
+    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+
+    this.setState({ users: res.data.items, isLoading: false});
   }
 
   render() {
@@ -26,7 +36,7 @@ class App extends Component {
       <div className="App">
         <Navbar title='Github Finder'/>
         <div className='container'>
-          <Search />
+          <Search searchUsers={this.searchUsers} />
           <Users isLoading={this.state.isLoading} users={this.state.users} />
         </div>
       </div>
